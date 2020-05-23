@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Brandon "Bagrisham" Grisham -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7c1106c071.js" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <title>Rock-Paper-Scissors</title>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>A Game of Rock-Paper-Scissors</h1>
+    </div>
+    <div class="container">
+        <div class="scoreboard">
+            <h3 class="player">You</h3>
+            <p id="pscore"></p>
+            <h3 class="machine" id="machine">The Machine</h3>
+            <p id="cscore"></p>
+        </div>
+        <div class="choices">
+            <div class="rock animation" id="rock">
+                <i class="far fa-hand-rock"></i>
+            </div>
+            <div class="paper animation2" id="paper">
+                <i class="far fa-hand-paper"></i>
+            </div>
+            <div class="scissor animation3" id="scissor">
+                <i class="far fa-hand-scissors"></i>
+            </div>
+        </div>
+        <div class="info" id="info">
+            <p class="info-text" id="info-text"></p>
+        </div>
+        <div class="reset">
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+<!-- Start JavaScript ______________________________________________________-->
+    <script>
+        let pScore = 0;
+        let cScore = 0;
+        let info = document.getElementById('info');
+        let elementPscore = document.getElementById('pscore');
+        let elementCscore = document.getElementById('cscore');
+        let rock = document.getElementById('rock');
+        let paper = document.getElementById('paper');
+        let scissor = document.getElementById('scissor');
+        let output = document.getElementById('info-text');
+        let machinePlayed = document.getElementById('machine');
+        let playerSelection;
+        let btnReset = document.getElementById('reset');
+
+        function animation() {
+            rock.classList.remove('animation')
+            setTimeout(() => {
+                rock.classList.add('animation');
+            }, 5);
+
+        }
+        function animation2() {
+            paper.classList.remove('animation2')
+            setTimeout(() => {
+                paper.classList.add('animation2');
+            }, 5);
+
+        }
+        function animation3() {
+            scissor.classList.remove('animation3')
+            setTimeout(() => {
+                scissor.classList.add('animation3');
+            }, 5);
+
+        }
+        rock.addEventListener('click', (e) => {
+            animation();
+
+            playerSelection = 'rock';
+            if (pScore < 5 && cScore < 5) {
+                let machineSelection = machinePlay();
+                playRound(playerSelection, machineSelection);
+            } else {
+                if (pScore == 5) {
+                    output.textContent = "That is the end of the game - Congratulations! You won!";
+                    info.style.backgroundColor = '#0c6900'
+                } else {
+                    output.textContent = "That is the end of the game - Sorry, but you lost. Play again?";
+                    info.style.backgroundColor = '#8a0000'
+                }
+            }
+
+        }, false)
+        paper.addEventListener('click', (e) => {
+            animation2();
+
+            playerSelection = 'paper';
+            if (pScore < 5 && cScore < 5) {
+                let machineSelection = machinePlay();
+                playRound(playerSelection, machineSelection);
+            } else {
+                if (pScore == 5) {
+                    output.textContent = "That is the end of the game - Congratulations! You won!";
+                    info.style.backgroundColor = '#0c6900'
+                } else {
+                    output.textContent = "That is the end of the game - Sorry, but you lost. Play again?";
+                    info.style.backgroundColor = '#8a0000'
+                }
+            }
+
+        }, false)
+        scissor.addEventListener('click', (e) => {
+            animation3();
+
+            playerSelection = 'scissor';
+            if (pScore < 5 && cScore < 5) {
+                let machineSelection = machinePlay();
+                playRound(playerSelection, machineSelection);
+            } else {
+                if (pScore == 5) {
+                    output.textContent = "That is the end of the game - Congratulations! You won!";
+                    info.style.backgroundColor = '#0c6900'
+                } else {
+                    output.textContent = "That is the end of the game - Sorry, but you lost. Play again?";
+                    info.style.backgroundColor = '#8a0000'
+                }
+            }
+
+        }, false)
+        function machinePlay() {
+            let ran = Math.floor((Math.random() * 3) + 1);
+
+            let rpc = ["rock", "paper", "scissor"];
+
+            switch (ran) {
+                case 1:
+                    machinePlayed.innerHTML = "The Machine <i class='far fa-hand-rock'></i>";
+                    return rpc[0];
+
+                case 2:
+                    machinePlayed.innerHTML = "The Machine <i class='far fa-hand-paper'></i>";
+                    return rpc[1];
+                case 3:
+                    machinePlayed.innerHTML = "The Machine <i class='far fa-hand-scissors'></i>";
+                    return rpc[2];
+            }
+
+        }
+        function playRound(playerSelection, machineSelection) {
+            switch (playerSelection) {
+                case "rock":
+                    if (machineSelection == "rock") {
+                        output.textContent = "Oh great. A tie. Nobody wins.";
+                    } else if (machineSelection == "paper") {
+                        output.textContent = "Sorry, but you lost. " + machineSelection + " beats " + playerSelection;
+                        cScore += 1;
+                        elementCscore.textContent = cScore;
+                    } else if (machineSelection == "scissor") {
+                        output.textContent = "Hey, you won! " + playerSelection + " beats " + machineSelection;
+                        pScore += 1;
+                        elementPscore.textContent = pScore;
+                    }
+                    break;
+                case "paper":
+                    if (machineSelection == "paper") {
+                        output.textContent = "Oh great. A tie. Nobody wins."
+                    } else if (machineSelection == "scissor") {
+                        output.textContent = "Sorry, but you lost. " + machineSelection + " beats " + playerSelection;
+                        cScore += 1;
+                        elementCscore.textContent = cScore;
+                    } else if (machineSelection == "rock") {
+                        output.textContent = "Hey, you won! " + playerSelection + " beats " + machineSelection;
+                        pScore += 1;
+                        elementPscore.textContent = pScore;
+                    }
+                    break;
+                case "scissor":
+                    if (machineSelection == "scissor") {
+                        output.textContent = "Oh great. A tie. Nobody wins."
+                    } else if (machineSelection == "rock") {
+                        output.textContent = "Sorry, but you lost. " + machineSelection + " beats " + playerSelection
+                        cScore += 1;
+                        elementCscore.textContent = cScore;
+                    } else if (machineSelection == "paper") {
+                        output.textContent = "Hey, you won! " + playerSelection + " beats " + machineSelection
+                        pScore += 1;
+                        elementPscore.textContent = pScore;
+                    }
+                    break;
+            }
+        }
+
+
+        reset.addEventListener('click', ()=>{
+            cScore = 0;
+            pScore = 0;
+            elementPscore.textContent = "0";
+            elementCscore.textContent = "0";
+            machinePlayed.innerHTML = "The Machine";
+            output.textContent = "";
+            info.style.backgroundColor = 'black';
+        },false);   
+
+    </script>
+</body>
+
+</html>
